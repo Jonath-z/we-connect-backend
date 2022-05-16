@@ -1,7 +1,7 @@
 import { ContactInterface, MessageInterface } from 'src/types';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('users')
+@Entity('user')
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -10,7 +10,7 @@ export class UserEntity {
   userName: string;
 
   @Column()
-  user_password: string;
+  userPassword: string;
 
   @Column()
   userToken: string;
@@ -21,13 +21,13 @@ export class UserEntity {
   @Column()
   userAvatarUrl: string;
 
-  @Column()
+  @Column('simple-array', { default: '' })
   contacts: ContactInterface[];
 
-  @Column()
+  @Column('simple-array', { default: '' })
   blockedContact: ContactInterface[];
 
-  @Column()
+  @Column('simple-array', { default: '' })
   messages: MessageInterface[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

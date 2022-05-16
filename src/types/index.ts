@@ -1,6 +1,6 @@
 export interface UserInterface {
   userName: string;
-  user_password: string;
+  userPassword: string;
   userToken: string;
   userProfileUrl: string;
   userAvatarUrl: string;

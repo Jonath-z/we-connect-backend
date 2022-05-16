@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserInterface } from 'src/types';
+import { ContactInterface, MessageInterface, UserInterface } from 'src/types';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { UserEntity } from './user.entity';
 
@@ -15,10 +15,7 @@ class UserService {
     return this.userRepository.save(user);
   }
 
-  addNewContact(
-    id: number,
-    contact: Partial<UserEntity>,
-  ): Promise<UpdateResult> {
+  addNewContact(id: number, contact: ContactInterface): Promise<UpdateResult> {
     return this.userRepository
       .createQueryBuilder()
       .update(UserEntity)
@@ -29,10 +26,7 @@ class UserService {
       .execute();
   }
 
-  addNewMessage(
-    id: number,
-    message: Partial<UserEntity>,
-  ): Promise<UpdateResult> {
+  addNewMessage(id: number, message: MessageInterface): Promise<UpdateResult> {
     return this.userRepository
       .createQueryBuilder()
       .update(UserEntity)
@@ -43,23 +37,25 @@ class UserService {
       .execute();
   }
 
-  updateUserName(
-    id: number,
-    userName: Partial<UserEntity>,
-  ): Promise<UpdateResult> {
+  findById(id: number): Promise<UserInterface[]> {
+    return this.userRepository.find({ where: { id: id } });
+  }
+
+  findAll(): Promise<UserInterface[]> {
+    return this.userRepository.find();
+  }
+
+  updateUserName(id: number, userName: string): Promise<UpdateResult> {
     return this.userRepository.update(id, { userName: `${userName}` });
   }
 
-  updatePassword(
-    id: number,
-    password: Partial<UserEntity>,
-  ): Promise<UpdateResult> {
-    return this.userRepository.update(id, password);
+  updatePassword(id: number, password: string): Promise<UpdateResult> {
+    return this.userRepository.update(id, { userPassword: password });
   }
 
   updateProfileImage(
     id: number,
-    userProfileUrl: Partial<UserEntity>,
+    userProfileUrl: string,
   ): Promise<UpdateResult> {
     return this.userRepository.update(id, {
       userProfileUrl: `${userProfileUrl}`,
@@ -74,11 +70,8 @@ class UserService {
       userAvatarUrl: `${userAvatarUrl}`,
     });
   }
-  updateUserToken(
-    id: number,
-    userToken: Partial<UserEntity>,
-  ): Promise<UpdateResult> {
-    return this.userRepository.update(id, userToken);
+  updateUserToken(id: number, userToken: string): Promise<UpdateResult> {
+    return this.userRepository.update(id, { userToken: userToken });
   }
 
   deleteContact(id: number, contactId: number): Promise<DeleteResult> {
@@ -86,7 +79,10 @@ class UserService {
       .createQueryBuilder()
       .delete()
       .from(UserEntity)
-      .where('question_id IN (:...id)', { contactId: contactId })
+      .where('id = :id AND user.contacts IN (:...id)', {
+        id: id,
+        contactId: contactId,
+      })
       .execute();
   }
 
@@ -95,7 +91,16 @@ class UserService {
       .createQueryBuilder()
       .delete()
       .from(UserEntity)
-      .where('question_id IN (:...id)', { messageId: messageId })
+      .where('id = :id AND user.messages IN (:...id)', { messageId: messageId })
+      .execute();
+  }
+
+  deleteAccount(id: number): Promise<DeleteResult> {
+    return this.userRepository
+      .createQueryBuilder()
+      .delete()
+      .from(UserEntity)
+      .where('id = :id', { id: id })
       .execute();
   }
 }
