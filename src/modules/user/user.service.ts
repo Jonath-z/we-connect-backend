@@ -1,105 +1,40 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ContactInterface, MessageInterface, UserInterface } from 'src/types';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
-import { UserEntity } from './user.entity';
+import { UserModel } from './model/user.model';
+import { CreateUserDto, UserUpdateProfileDto } from './user.dto';
 
 @Injectable()
 class UserService {
   constructor(
-    @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
+    @InjectRepository(UserModel)
+    private userRepository: Repository<UserModel>,
   ) {}
 
-  createUser(user: UserInterface): Promise<UserInterface> {
+  createUser(user: CreateUserDto): Promise<CreateUserDto> {
     return this.userRepository.save(user);
   }
 
-  addNewContact(id: number, contact: ContactInterface): Promise<UpdateResult> {
-    return this.userRepository
-      .createQueryBuilder()
-      .update(UserEntity)
-      .set({
-        contacts: () => `array_append(${contact}, 1)`,
-      })
-      .where('id = :id', { id: id })
-      .execute();
-  }
-
-  addNewMessage(id: number, message: MessageInterface): Promise<UpdateResult> {
-    return this.userRepository
-      .createQueryBuilder()
-      .update(UserEntity)
-      .set({
-        messages: () => `array_append(${message}, 1)`,
-      })
-      .where('id = :id', { id: id })
-      .execute();
-  }
-
-  findById(id: number): Promise<UserInterface[]> {
+  findById(id: number): Promise<UserModel[]> {
     return this.userRepository.find({ where: { id: id } });
   }
 
-  findAll(): Promise<UserInterface[]> {
+  findAll(): Promise<CreateUserDto[]> {
     return this.userRepository.find();
   }
 
-  updateUserName(id: number, userName: string): Promise<UpdateResult> {
-    return this.userRepository.update(id, { userName: `${userName}` });
-  }
-
-  updatePassword(id: number, password: string): Promise<UpdateResult> {
-    return this.userRepository.update(id, { userPassword: password });
-  }
-
-  updateProfileImage(
+  updateUserById(
     id: number,
-    userProfileUrl: string,
+    data: UserUpdateProfileDto,
   ): Promise<UpdateResult> {
-    return this.userRepository.update(id, {
-      userProfileUrl: `${userProfileUrl}`,
-    });
-  }
-
-  updateAvatarImage(
-    id: number,
-    userAvatarUrl: Partial<UserEntity>,
-  ): Promise<UpdateResult> {
-    return this.userRepository.update(id, {
-      userAvatarUrl: `${userAvatarUrl}`,
-    });
-  }
-  updateUserToken(id: number, userToken: string): Promise<UpdateResult> {
-    return this.userRepository.update(id, { userToken: userToken });
-  }
-
-  deleteContact(id: number, contactId: number): Promise<DeleteResult> {
-    return this.userRepository
-      .createQueryBuilder()
-      .delete()
-      .from(UserEntity)
-      .where('id = :id AND user.contacts IN (:...id)', {
-        id: id,
-        contactId: contactId,
-      })
-      .execute();
-  }
-
-  deleteMessage(id: number, messageId: string): Promise<DeleteResult> {
-    return this.userRepository
-      .createQueryBuilder()
-      .delete()
-      .from(UserEntity)
-      .where('id = :id AND user.messages IN (:...id)', { messageId: messageId })
-      .execute();
+    return this.userRepository.update(id, data);
   }
 
   deleteAccount(id: number): Promise<DeleteResult> {
     return this.userRepository
       .createQueryBuilder()
       .delete()
-      .from(UserEntity)
+      .from(UserModel)
       .where('id = :id', { id: id })
       .execute();
   }
