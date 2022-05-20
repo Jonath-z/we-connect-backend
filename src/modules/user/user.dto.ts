@@ -1,5 +1,4 @@
 import { InputType, Field } from '@nestjs/graphql';
-// import { IsArray, IsNumber, IsOptional, IsString } from 'class-validator';
 import { ContactInterface, MessageInterface } from 'src/types';
 
 @InputType()
