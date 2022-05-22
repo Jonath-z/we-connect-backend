@@ -1,6 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
-import { ContactInterface, MessageInterface } from 'src/types';
+import { MessageInterface, ContactInterface } from 'src/types';
+import { Contact, Message } from './model';
 
 @ObjectType()
 @Entity('users')
@@ -31,15 +32,15 @@ export class UserModel {
 
   @Field()
   @Column('simple-array', { default: '' })
-  contacts: ContactInterface[];
+  contacts?: ContactInterface[];
 
   @Field()
   @Column('simple-array', { default: '' })
-  blockedContact: ContactInterface[];
+  blockedContact?: ContactInterface[];
 
   @Field()
   @Column('simple-array', { default: '' })
-  messages: MessageInterface[];
+  messages?: MessageInterface[];
 
   @Field()
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

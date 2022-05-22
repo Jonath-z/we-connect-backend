@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
-import { UserModel } from './model/user.model';
+import { UserModel } from './user.model';
 import { CreateUserDto, UserUpdateProfileDto } from './user.dto';
 
 @Injectable()
