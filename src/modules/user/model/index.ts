@@ -1,11 +1,5 @@
-export class Contact {
-  contactName: string;
-  contactId: string;
-}
+import { Contact } from './contact.type';
+import { Message } from './message.type';
+import { UserModel } from './user.model';
 
-export class Message {
-  from: string;
-  to: string;
-  message: string;
-  messageId: string;
-}
+export { Contact, Message, UserModel };

@@ -1,40 +1,32 @@
 import { InputType, Field } from '@nestjs/graphql';
 import { ContactInterface, MessageInterface } from 'src/types';
+import { Contact, Message } from '../model';
 
 @InputType()
 export class UserUpdateProfileDto {
   @Field()
   id: number;
 
-  @Field()
+  @Field({ nullable: true })
   userName?: string;
 
-  @Field()
+  @Field({ nullable: true })
   userPassword?: string;
 
-  @Field()
+  @Field({ nullable: true })
   userToken?: string;
 
-  @Field()
+  @Field({ nullable: true })
   userProfileUrl?: string;
 
-  @Field()
+  @Field({ nullable: true })
   userAvatarUrl?: string;
-
-  @Field()
+  @Field((type) => [Contact], { nullable: true })
   contacts?: ContactInterface[];
 
-  @Field()
+  @Field((type) => [Contact], { nullable: true })
   blockedContact?: ContactInterface[];
 
-  @Field()
+  @Field((type) => [Message], { nullable: true })
   messages?: MessageInterface[];
-}
-
-export class CreateUserDto {
-  @Field()
-  userName: string;
-
-  @Field()
-  userPassword: string;
 }

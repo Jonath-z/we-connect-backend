@@ -1,0 +1,16 @@
+[
+  {
+    "name": "default",
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "userName": "postgres",
+    "password": "password",
+    "database": "we-connect",
+    "entities": ["src/modules/**/*.model.*"],
+    "synchronize": false,
+    "migration": ["src/database/migrations/*{.ts,.js}"],
+    "migrationsTableName": "TypeormMigrations",
+    "migrationsRun": true
+  }
+]

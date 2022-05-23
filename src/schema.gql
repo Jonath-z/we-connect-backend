@@ -1,0 +1,47 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Contact {
+  contactId: String!
+  contactName: String!
+}
+
+input CreateUserDto {
+  userName: String!
+  userPassword: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Message {
+  from: String!
+  message: String!
+  messageId: String!
+  to: String!
+}
+
+type Mutation {
+  createUser(userData: CreateUserDto!): UserModel!
+}
+
+type Query {
+  findAllUsers: [UserModel!]!
+  findUserById(id: Float!): [UserModel!]!
+}
+
+type UserModel {
+  blockedContact: [Contact!]
+  contacts: [Contact!]
+  id: Float!
+  joinedAt: DateTime!
+  messages: [Message!]
+  userAvatarUrl: String
+  userName: String!
+  userPassword: String!
+  userProfileUrl: String
+  userToken: String
+}

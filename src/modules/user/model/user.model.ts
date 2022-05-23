@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
 import { MessageInterface, ContactInterface } from 'src/types';
-import { Contact, Message } from './model';
+import { Contact, Message } from './index';
 
 @ObjectType()
 @Entity('users')
@@ -18,27 +18,27 @@ export class UserModel {
   @Column()
   userPassword: string;
 
-  @Field()
-  @Column()
-  userToken: string;
+  @Field({ nullable: true })
+  @Column({ nullable: true, default: '' })
+  userToken?: string;
 
-  @Field()
-  @Column()
-  userProfileUrl: string;
+  @Field({ nullable: true })
+  @Column({ nullable: true, default: '' })
+  userProfileUrl?: string;
 
-  @Field()
-  @Column()
+  @Field({ nullable: true })
+  @Column({ nullable: true, default: '' })
   userAvatarUrl: string;
 
-  @Field()
+  @Field((type) => [Contact], { nullable: true })
   @Column('simple-array', { default: '' })
   contacts?: ContactInterface[];
 
-  @Field()
+  @Field((type) => [Contact], { nullable: true })
   @Column('simple-array', { default: '' })
   blockedContact?: ContactInterface[];
 
-  @Field()
+  @Field((type) => [Message], { nullable: true })
   @Column('simple-array', { default: '' })
   messages?: MessageInterface[];
 

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
-import { UserModel } from './user.model';
-import { CreateUserDto, UserUpdateProfileDto } from './user.dto';
+import { UserModel } from './model';
+import { CreateUserDto, UserUpdateProfileDto } from './dto';
 
 @Injectable()
 class UserService {
@@ -19,7 +19,7 @@ class UserService {
     return this.userRepository.find({ where: { id: id } });
   }
 
-  findAll(): Promise<CreateUserDto[]> {
+  findAll(): Promise<UserModel[]> {
     return this.userRepository.find();
   }
 

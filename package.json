@@ -23,7 +23,7 @@
     "migrate:win-run": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "migrate:run": "npm run typeorm-cli migration:run",
     "migrate:revert": "npm run typeorm-cli migration:revert",
-    "migrate:create": "ts-node ./node_modules/typeorm/cli.js migration:create -d src/database/migrations -n "
+    "migrate:create": "ts-node ./node_modules/typeorm/cli.js migration:create -d src/modules/database/migrations -n "
   },
   "dependencies": {
     "@nestjs/apollo": "^10.0.11",
@@ -35,6 +35,7 @@
     "@nestjs/typeorm": "^8.0.3",
     "apollo-server-express": "^3.7.0",
     "class-validator": "^0.13.2",
+    "dotenv": "^16.0.1",
     "graphql": "^16.5.0",
     "graphql-tools": "^8.2.9",
     "pg": "^8.7.3",
