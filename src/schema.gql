@@ -7,6 +7,11 @@ type Contact {
   contactName: String!
 }
 
+input ContactDto {
+  contactId: String!
+  contactName: String!
+}
+
 input CreateUserDto {
   userName: String!
   userPassword: String!
@@ -24,8 +29,17 @@ type Message {
   to: String!
 }
 
+input MessageDto {
+  from: String!
+  message: String!
+  messageId: String!
+  to: String!
+}
+
 type Mutation {
   createUser(userData: CreateUserDto!): UserModel!
+  deleteUser(id: Float!): UserModel!
+  updateUserById(data: UserUpdateProfileDto!, id: Float!): UserModel!
 }
 
 type Query {
@@ -34,14 +48,22 @@ type Query {
 }
 
 type UserModel {
-  blockedContact: [Contact!]
-  contacts: [Contact!]
   id: Float!
   joinedAt: DateTime!
-  messages: [Message!]
   userAvatarUrl: String
   userName: String!
   userPassword: String!
+  userProfileUrl: String
+  userToken: String
+}
+
+input UserUpdateProfileDto {
+  blockedContact: [ContactDto!]
+  contacts: [ContactDto!]
+  messages: [MessageDto!]
+  userAvatarUrl: String
+  userName: String
+  userPassword: String
   userProfileUrl: String
   userToken: String
 }

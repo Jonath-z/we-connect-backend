@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { Module } from '@nestjs/common';
 
 @Module({
   imports: [
@@ -11,12 +11,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         type: 'postgres',
         host: configService.get('POSTGRES_HOST'),
         port: parseInt(<string>configService.get('POSTGRES_PORT')),
-        // username: configService.get('POSTGRES_USER') ,
+        // username: configService.get('POSTGRES_USER'),
         username: 'postgres',
         password: configService.get('POSTGRES_PASSWORD') || 'password',
         database: configService.get('POSTGRES_DATABASE'),
-        entities: [`${__dirname}/../**/*.model.*`],
-        synchronize: false,
+        entities: [`${__dirname}/**/*.model.{ts,js}`],
+        synchronize: true,
       }),
     }),
   ],

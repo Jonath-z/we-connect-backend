@@ -1,12 +1,33 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { InputType, Field } from '@nestjs/graphql';
 import { ContactInterface, MessageInterface } from 'src/types';
-import { Contact, Message } from '../model';
+
+@InputType()
+export class MessageDto {
+  @Field()
+  from: string;
+
+  @Field()
+  to: string;
+
+  @Field()
+  message: string;
+
+  @Field()
+  messageId: string;
+}
+
+@InputType()
+export class ContactDto {
+  @Field()
+  contactName: string;
+
+  @Field()
+  contactId: string;
+}
 
 @InputType()
 export class UserUpdateProfileDto {
-  @Field()
-  id: number;
-
   @Field({ nullable: true })
   userName?: string;
 
@@ -21,12 +42,13 @@ export class UserUpdateProfileDto {
 
   @Field({ nullable: true })
   userAvatarUrl?: string;
-  @Field((type) => [Contact], { nullable: true })
+
+  @Field((type) => [ContactDto], { nullable: true })
   contacts?: ContactInterface[];
 
-  @Field((type) => [Contact], { nullable: true })
+  @Field((type) => [ContactDto], { nullable: true })
   blockedContact?: ContactInterface[];
 
-  @Field((type) => [Message], { nullable: true })
+  @Field((type) => [MessageDto], { nullable: true })
   messages?: MessageInterface[];
 }

@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ObjectType, Field } from '@nestjs/graphql';
 import { MessageInterface, ContactInterface } from 'src/types';
-import { Contact, Message } from './index';
+import { Contact, Message } from './types/index';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @ObjectType()
 @Entity('users')

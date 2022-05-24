@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { Args, Resolver, Query, Mutation } from '@nestjs/graphql';
-import { CreateUserDto } from './dto';
-import { UserModel } from './model';
+import { CreateUserDto, UserUpdateProfileDto } from './dto';
+import { UserModel } from './model/types';
 import UserService from './user.service';
 
 @Resolver(() => UserModel)
@@ -21,5 +21,18 @@ export class UserResolver {
   @Mutation(() => UserModel, { name: 'createUser' })
   async createUser(@Args('userData') userData: CreateUserDto) {
     return await this.userService.createUser(userData);
+  }
+
+  @Mutation(() => UserModel, { name: 'updateUserById' })
+  async updateUserById(
+    @Args('data') data: UserUpdateProfileDto,
+    @Args('id') id: number,
+  ) {
+    return await this.userService.updateUserById(id, data);
+  }
+
+  @Mutation(() => UserModel, { name: 'deleteUser' })
+  async deleteUser(@Args('id') id: number) {
+    return this.userService.deleteUser(id);
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
-import { UserModel } from './model';
+import { UserModel } from './model/types';
 import { CreateUserDto, UserUpdateProfileDto } from './dto';
 
 @Injectable()
@@ -30,7 +30,7 @@ class UserService {
     return this.userRepository.update(id, data);
   }
 
-  deleteAccount(id: number): Promise<DeleteResult> {
+  deleteUser(id: number): Promise<DeleteResult> {
     return this.userRepository
       .createQueryBuilder()
       .delete()
