@@ -1,12 +1,25 @@
 import { Module } from '@nestjs/common';
-import { UserResolver } from './user.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CallEntity } from '../calls/call.entity';
+import { ContactEntity } from '../contact/contact.entity';
+import { MessageEnity } from '../Message/message.entity';
+import { StoryEntity } from '../story/story.entity';
+import { UserController } from './user.controller';
+import { UserEntity } from './user.entity';
 import UserService from './user.service';
-import { UserModel } from './model/types';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UserModel])],
-  providers: [UserService, UserResolver],
-  // exports: [UserService],
+  imports: [
+    TypeOrmModule.forFeature([
+      UserEntity,
+      ContactEntity,
+      MessageEnity,
+      CallEntity,
+      StoryEntity,
+    ]),
+  ],
+  providers: [UserService],
+  controllers: [UserController],
+  exports: [UserService],
 })
 export class UserModule {}

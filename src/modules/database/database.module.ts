@@ -1,6 +1,10 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
+import { UserEntity } from '../user/user.entity';
+import { CallEntity } from '../calls/call.entity';
+import { MessageEnity } from '../Message/message.entity';
+import { StoryEntity } from '../story/story.entity';
 
 @Module({
   imports: [
@@ -11,12 +15,11 @@ import { Module } from '@nestjs/common';
         type: 'postgres',
         host: configService.get('POSTGRES_HOST'),
         port: parseInt(<string>configService.get('POSTGRES_PORT')),
-        // username: configService.get('POSTGRES_USER'),
         username: 'postgres',
         password: configService.get('POSTGRES_PASSWORD') || 'password',
         database: configService.get('POSTGRES_DATABASE'),
-        entities: [`${__dirname}/**/*.model.{ts,js}`],
-        synchronize: true,
+        entities: [UserEntity, CallEntity, MessageEnity, StoryEntity],
+        synchronize: false,
       }),
     }),
   ],
