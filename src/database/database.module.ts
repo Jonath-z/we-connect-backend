@@ -1,10 +1,10 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
-import { UserEntity } from '../user/user.entity';
-import { CallEntity } from '../calls/call.entity';
-import { MessageEnity } from '../Message/message.entity';
-import { StoryEntity } from '../story/story.entity';
+import { UserEntity } from '../modules/user/user.entity';
+import { CallEntity } from '../modules/calls/call.entity';
+import { MessageEnity } from '../modules/Message/message.entity';
+import { StoryEntity } from '../modules/story/story.entity';
 
 @Module({
   imports: [
