@@ -1,12 +1,21 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+  Column,
+} from 'typeorm';
+import { UserEntity } from '../user/user.entity';
 
 @Entity('call')
 export class CallEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true, default: '' })
-  username: string;
+  // @Column({ nullable: true, default: '' })
+  @ManyToOne(() => UserEntity, (user: UserEntity) => user.calls)
+  @JoinColumn()
+  username: UserEntity;
 
   @Column({ nullable: true, default: '' })
   userAvatarUrl: string;

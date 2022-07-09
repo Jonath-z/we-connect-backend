@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { CallEntity } from '../calls/call.entity';
 import { ContactEntity } from '../contact/contact.entity';
 import { MessageEnity } from '../Message/message.entity';
 import { StoryEntity } from '../story/story.entity';
@@ -28,7 +29,7 @@ export class UserEntity {
   public contacts: ContactEntity[];
 
   @OneToMany(() => ContactEntity, (contact: ContactEntity) => contact.username)
-  public blockedContact: ContactEntity[];
+  public blockedContacts: ContactEntity[];
 
   @OneToMany(
     () => MessageEnity,
@@ -37,7 +38,10 @@ export class UserEntity {
   public messages: MessageEnity[];
 
   @OneToMany(() => StoryEntity, (story: StoryEntity) => story.storyOwner)
-  stories: StoryEntity[];
+  public stories: StoryEntity[];
+
+  @OneToMany(() => CallEntity, (call: CallEntity) => call.username)
+  public calls: CallEntity[];
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   joinedAt: Date;

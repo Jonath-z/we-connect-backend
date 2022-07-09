@@ -12,10 +12,9 @@ export class ContactEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  //   @Column({ nullable: true, default: '' })
   @ManyToOne(() => UserEntity, (user: UserEntity) => user.contacts)
   @JoinColumn()
-  username: string;
+  username: UserEntity;
 
   @Column({ nullable: true, default: '' })
   userAvatartUrl?: string;
