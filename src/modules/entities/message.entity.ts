@@ -5,14 +5,13 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { UserEntity } from '../user/user.entity';
+import UserEntity from './user.entity';
 
 @Entity('messages')
 export class MessageEnity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  //   @Column({ nullable: true, default: '' })
   @ManyToOne(() => UserEntity, (user: UserEntity) => user.messages)
   @JoinColumn()
   senderUsername: string;

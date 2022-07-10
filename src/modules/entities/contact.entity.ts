@@ -5,7 +5,9 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { UserEntity } from '../user/user.entity';
+import UserEntity from './user.entity';
+
+console.log('user entity', UserEntity);
 
 @Entity('contact')
 export class ContactEntity {
@@ -21,7 +23,4 @@ export class ContactEntity {
 
   @Column({ nullable: true, default: '' })
   userCoverUrl?: string;
-
-  //   @Column({ nullable: true, default: '' })
-  //   lastMessage: TMessage;
 }

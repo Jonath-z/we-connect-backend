@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { CallEntity } from '../calls/call.entity';
-import { ContactEntity } from '../contact/contact.entity';
-import { MessageEnity } from '../Message/message.entity';
-import { StoryEntity } from '../story/story.entity';
+import { CallEntity } from './call.entity';
+import { ContactEntity } from './contact.entity';
+import { MessageEnity } from './message.entity';
+import { StoryEntity } from './story.entity';
 
-@Entity('users')
-export class UserEntity {
+@Entity('user')
+class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -42,7 +42,6 @@ export class UserEntity {
 
   @OneToMany(() => CallEntity, (call: CallEntity) => call.username)
   public calls: CallEntity[];
-
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  joinedAt: Date;
 }
+
+export default UserEntity;
