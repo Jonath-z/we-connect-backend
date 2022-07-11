@@ -26,22 +26,22 @@ class UserEntity {
   userCoverUrl: string;
 
   @OneToMany(() => ContactEntity, (contact: ContactEntity) => contact.username)
-  public contacts: ContactEntity[];
+  contacts: ContactEntity[];
 
   @OneToMany(() => ContactEntity, (contact: ContactEntity) => contact.username)
-  public blockedContacts: ContactEntity[];
+  blockedContacts: ContactEntity[];
 
   @OneToMany(
     () => MessageEnity,
     (message: MessageEnity) => message.senderUsername,
   )
-  public messages: MessageEnity[];
+  messages: MessageEnity[];
 
   @OneToMany(() => StoryEntity, (story: StoryEntity) => story.storyOwner)
-  public stories: StoryEntity[];
+  stories: StoryEntity[];
 
   @OneToMany(() => CallEntity, (call: CallEntity) => call.username)
-  public calls: CallEntity[];
+  calls: CallEntity[];
 }
 
 export default UserEntity;

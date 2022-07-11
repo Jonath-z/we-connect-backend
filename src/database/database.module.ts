@@ -18,10 +18,12 @@ import { StoryEntity } from '../modules/entities/story.entity';
         username: 'postgres',
         password: configService.get('POSTGRES_PASSWORD') || 'password',
         database: configService.get('POSTGRES_DATABASE'),
-        entities: [UserEntity, CallEntity, MessageEnity, StoryEntity],
+        entities: ['/src/modules/entities/*.entity.ts'],
         synchronize: false,
       }),
     }),
   ],
 })
 export class DatabaseModule {}
+
+// "typeorm-cli": "ts-node ./node_modules/typeorm/cli.js $*",
