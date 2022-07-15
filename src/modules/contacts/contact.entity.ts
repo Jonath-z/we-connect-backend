@@ -5,9 +5,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import UserEntity from './user.entity';
-
-console.log('user entity', UserEntity);
+import UserEntity from '../user/user.entity';
 
 @Entity('contact')
 export class ContactEntity {

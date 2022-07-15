@@ -5,10 +5,10 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import UserEntity from './user.entity';
+import UserEntity from '../user/user.entity';
 
 @Entity('messages')
-export class MessageEnity {
+export class MessageEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { CallEntity } from './call.entity';
-import { ContactEntity } from './contact.entity';
-import { MessageEnity } from './message.entity';
-import { StoryEntity } from './story.entity';
+import { CallEntity } from '../call/call.entity';
+import { ContactEntity } from '../contacts/contact.entity';
+import { MessageEntity } from '../message/message.entity';
+import { StoryEntity } from '../story/story.entity';
 
 @Entity('user')
 class UserEntity {
@@ -32,10 +32,10 @@ class UserEntity {
   blockedContacts: ContactEntity[];
 
   @OneToMany(
-    () => MessageEnity,
-    (message: MessageEnity) => message.senderUsername,
+    () => MessageEntity,
+    (message: MessageEntity) => message.senderUsername,
   )
-  messages: MessageEnity[];
+  messages: MessageEntity[];
 
   @OneToMany(() => StoryEntity, (story: StoryEntity) => story.storyOwner)
   stories: StoryEntity[];

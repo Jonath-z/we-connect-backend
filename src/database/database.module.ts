@@ -1,10 +1,10 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
-import UserEntity from '../modules/entities/user.entity';
-import { CallEntity } from '../modules/entities/call.entity';
-import { MessageEnity } from '../modules/entities/message.entity';
-import { StoryEntity } from '../modules/entities/story.entity';
+// import UserEntity from '../modules/user/user.entity';
+// import { CallEntity } from '../modules/entities/call.entity';
+// import { MessageEnity } from '../modules/entities/message.entity';
+// import { StoryEntity } from '../modules/story/story.entity';
 
 @Module({
   imports: [
@@ -18,7 +18,7 @@ import { StoryEntity } from '../modules/entities/story.entity';
         username: 'postgres',
         password: configService.get('POSTGRES_PASSWORD') || 'password',
         database: configService.get('POSTGRES_DATABASE'),
-        entities: ['/src/modules/entities/*.entity.ts'],
+        entities: [`dist/modules/**/*.entity.{js,ts}`],
         synchronize: false,
       }),
     }),

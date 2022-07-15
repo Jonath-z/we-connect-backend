@@ -8,13 +8,14 @@ module.exports = {
   username: process.env.POSTGRES_USER,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DATABASE,
-  entities: ['/src/modules/entities/*.entity.ts'],
+  entities: [`dist/modules/**/*.entity.{js,ts}`],
   synchronize: false,
-  migrations: ['/src/database/migrations/*.ts'],
+  migrations: ['src/database/migrations/*.ts'],
   migrationsTableName: 'TypeormMigrations',
   migrationsRun: true,
   cli: {
-    migrationsDir: '/src/database/migrations',
+    entitiesDir: 'src/modules',
+    migrationsDir: 'src/database/migrations',
   },
 };
 
