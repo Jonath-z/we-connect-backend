@@ -8,7 +8,7 @@ import { ContactModule } from './modules/contacts/contact.module';
 import { MessageModule } from './modules/message/message.module';
 import { StoryModule } from './modules/story/story.module';
 import { UserModule } from './modules/user/user.module';
-import { Gateway } from './web-socket/chat.gateway';
+import { CallGateWay } from './web-socket/call.gateway';
 
 @Module({
   imports: [
@@ -21,6 +21,6 @@ import { Gateway } from './web-socket/chat.gateway';
     StoryModule,
   ],
   controllers: [AppController],
-  providers: [AppService, Gateway],
+  providers: [AppService, CallGateWay],
 })
 export class AppModule {}
