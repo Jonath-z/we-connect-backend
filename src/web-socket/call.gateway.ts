@@ -3,14 +3,14 @@ import {
   MessageBody,
   SubscribeMessage,
   WebSocketGateway,
-  WebSocketServer,
 } from '@nestjs/websockets';
-import { Server, Socket } from 'socket.io';
+import { Socket } from 'socket.io';
 
-interface IRequestCall {
+interface IRequestCallDto {
   from: string;
   to: string;
   signal?: any;
+  callType: string;
 }
 
 @WebSocketGateway({
@@ -19,21 +19,18 @@ interface IRequestCall {
   },
 })
 export class CallGateWay {
-  @WebSocketServer()
-  server: Server;
-
   @SubscribeMessage('requestCall')
   handleRequetedCall(
-    @MessageBody() callRequest: IRequestCall,
+    @MessageBody() callRequest: IRequestCallDto,
     @ConnectedSocket() socket: Socket,
   ) {
-    const { from, to, signal } = callRequest;
-    socket.broadcast.emit('incomingCall', { from, to, signal });
+    const { from, to, signal, callType } = callRequest;
+    socket.broadcast.emit('incomingCall', { from, to, signal, callType });
   }
 
   @SubscribeMessage('cancelCall')
   handleCancelCall(
-    @MessageBody() cancelCall: IRequestCall,
+    @MessageBody() cancelCall: IRequestCallDto,
     @ConnectedSocket() socket: Socket,
   ) {
     const { from, to } = cancelCall;
@@ -42,10 +39,11 @@ export class CallGateWay {
 
   @SubscribeMessage('answerCall')
   handleAnswerCall(
-    @MessageBody() answerCall: IRequestCall,
+    @MessageBody() accepteCallData: IRequestCallDto,
     @ConnectedSocket() socket: Socket,
   ) {
-    const { from, to, signal } = answerCall;
-    socket.broadcast.emit('callAccepted', { from, to, signal });
+    const { from, to, signal, callType } = accepteCallData;
+    console.log('answer call signal', signal);
+    socket.broadcast.emit('callAccepted', { from, to, signal, callType });
   }
 }

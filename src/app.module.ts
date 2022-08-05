@@ -9,6 +9,7 @@ import { MessageModule } from './modules/message/message.module';
 import { StoryModule } from './modules/story/story.module';
 import { UserModule } from './modules/user/user.module';
 import { CallGateWay } from './web-socket/call.gateway';
+import { MessageGateWay } from './web-socket/message.gateway';
 
 @Module({
   imports: [
@@ -21,6 +22,6 @@ import { CallGateWay } from './web-socket/call.gateway';
     StoryModule,
   ],
   controllers: [AppController],
-  providers: [AppService, CallGateWay],
+  providers: [AppService, CallGateWay, MessageGateWay],
 })
 export class AppModule {}
