@@ -20,6 +20,9 @@ class UserEntity {
   userToken?: string;
 
   @Column({ nullable: true, default: '' })
+  userSocketId?: string;
+
+  @Column({ nullable: true, default: '' })
   userProfileUrl?: string;
 
   @Column({ nullable: true, default: '' })
