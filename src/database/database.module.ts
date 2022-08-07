@@ -25,5 +25,3 @@ import { Module } from '@nestjs/common';
   ],
 })
 export class DatabaseModule {}
-
-// "typeorm-cli": "ts-node ./node_modules/typeorm/cli.js $*",

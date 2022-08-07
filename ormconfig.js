@@ -18,5 +18,3 @@ module.exports = {
     migrationsDir: 'src/database/migrations',
   },
 };
-
-// "migrate:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -d src/database/migrations -n"
