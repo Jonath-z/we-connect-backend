@@ -8,8 +8,8 @@ import { ContactModule } from './modules/contacts/contact.module';
 import { MessageModule } from './modules/message/message.module';
 import { StoryModule } from './modules/story/story.module';
 import { UserModule } from './modules/user/user.module';
-import { CallGateWay } from './web-socket/call.gateway';
-import { MessageGateWay } from './web-socket/message.gateway';
+import { CallGateWay } from './web-socket/gateways/call.gateway';
+import { MessageGateWay } from './web-socket/gateways/message.gateway';
 
 @Module({
   imports: [

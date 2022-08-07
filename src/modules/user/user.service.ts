@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeepPartial, DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { CreateUserDto } from './createUser.dto';
 import UserEntity from './user.entity';
 
@@ -15,13 +15,37 @@ class UserService {
     return this.userRepository.save(user);
   }
 
-  findById(id: number): Promise<UserEntity[]> {
-    return this.userRepository.find({ where: { id: id } });
+  findById(id: number): Promise<UserEntity> {
+    return this.userRepository.findOne({
+      relations: ['contacts', 'calls', 'stories'],
+      where: { id },
+    });
   }
 
-  fintByUsername(username: string): Promise<UserEntity[]> {
-    return this.userRepository.find({
-      where: { userName: username.toLowerCase() },
+  findUserContactsById(id: number): Promise<UserEntity> {
+    return this.userRepository.findOne({
+      relations: ['contacts'],
+      where: { id },
+    });
+  }
+
+  findUserStoriesById(id: number): Promise<UserEntity> {
+    return this.userRepository.findOne({
+      relations: ['stories'],
+      where: { id },
+    });
+  }
+
+  findUserMessagesById(id: number): Promise<UserEntity> {
+    return this.userRepository.findOne({
+      relations: ['messages'],
+      where: { id },
+    });
+  }
+
+  findByUsername(userNameLowerCase: string): Promise<UserEntity> {
+    return this.userRepository.findOne({
+      where: { userNameLowerCase },
     });
   }
 
@@ -38,7 +62,7 @@ class UserService {
       .createQueryBuilder()
       .delete()
       .from(UserEntity)
-      .where('id = :id', { id: id })
+      .where('id = :id', { id })
       .execute();
   }
 }

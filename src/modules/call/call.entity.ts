@@ -20,13 +20,16 @@ export class CallEntity {
   userAvatarUrl: string;
 
   @Column({ nullable: true, default: '' })
-  Date: string;
+  date: string;
 
   @Column({ nullable: true, default: '' })
   time: string;
 
   @Column({ nullable: false, default: false })
   missed: boolean;
+
+  @Column({ nullable: true, default: false })
+  isIncoming: boolean;
 
   @Column({ nullable: false, default: false })
   isVideo: boolean;

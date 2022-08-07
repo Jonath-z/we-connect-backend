@@ -10,10 +10,13 @@ class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  userName: string;
+  @Column({ nullable: true, default: '' })
+  username: string;
 
-  @Column()
+  @Column({ nullable: true, default: '' })
+  usernameLowerCase: string;
+
+  @Column({ nullable: true, default: '' })
   userPassword: string;
 
   @Column({ nullable: true, default: '' })
@@ -31,13 +34,7 @@ class UserEntity {
   @OneToMany(() => ContactEntity, (contact: ContactEntity) => contact.username)
   contacts: ContactEntity[];
 
-  @OneToMany(() => ContactEntity, (contact: ContactEntity) => contact.username)
-  blockedContacts: ContactEntity[];
-
-  @OneToMany(
-    () => MessageEntity,
-    (message: MessageEntity) => message.senderUsername,
-  )
+  @OneToMany(() => MessageEntity, (message: MessageEntity) => message.sender)
   messages: MessageEntity[];
 
   @OneToMany(() => StoryEntity, (story: StoryEntity) => story.storyOwner)

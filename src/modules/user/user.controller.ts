@@ -20,9 +20,11 @@ export class UserController {
     return users;
   }
 
-  @Post('/')
+  @Post('/create')
   async createUser(@Body() newUser: CreateUserDto) {
-    const user = await this.userServices.fintByUsername(newUser.userName);
+    const user = await this.userServices.findByUsername(
+      newUser.userName.toLocaleLowerCase(),
+    );
 
     if (!user) {
       await this.userServices.createUser(newUser);
@@ -35,14 +37,14 @@ export class UserController {
     }
   }
 
-  @Get('/')
-  async findUser(@Param() userId: number) {
-    const foundUser = await this.userServices.findById(userId);
+  @Get('/:userIdOrUserToken')
+  async findUser(@Param() userIdOrUserToken: number) {
+    const user = await this.userServices.findById(userIdOrUserToken);
 
-    if (foundUser) {
+    if (user) {
       return {
         message: 'user found',
-        user: foundUser,
+        user,
       };
     } else {
       return {

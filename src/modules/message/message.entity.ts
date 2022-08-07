@@ -14,23 +14,23 @@ export class MessageEntity {
 
   @ManyToOne(() => UserEntity, (user: UserEntity) => user.messages)
   @JoinColumn()
-  senderUsername: string;
+  sender: string;
 
-  @Column({ nullable: true, default: '' })
+  @Column({ nullable: true, default: '', type: 'varchar' })
   senderId: string;
 
-  @Column({ nullable: true, default: '' })
-  receiverUsername: string;
+  @Column({ nullable: true, default: '', type: 'varchar' })
+  receiver: string;
 
-  @Column({ nullable: true, default: '' })
+  @Column({ nullable: true, default: '', type: 'varchar' })
   receiverId: string;
 
-  @Column({ nullable: true, default: '' })
+  @Column({ nullable: true, default: '', type: 'varchar' })
   message: string;
 
-  @Column({ nullable: true, default: '' })
+  @Column({ nullable: true, default: '', type: 'varchar' })
   date: string;
 
-  @Column({ nullable: true, default: '' })
+  @Column({ nullable: true, default: '', type: 'varchar' })
   time: string;
 }
