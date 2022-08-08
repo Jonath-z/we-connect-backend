@@ -12,8 +12,13 @@ export interface ContactInterface {
 }
 
 export interface MessageInterface {
-  from: string;
-  to: string;
+  sender?: string;
+  senderId: string;
+  receiver: string;
+  receiverId: string;
   message: string;
-  messageId: string;
+  date: string;
+  time: string;
+  isVideo: boolean;
+  isImage: boolean;
 }

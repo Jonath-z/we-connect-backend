@@ -1,19 +1,25 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
 export class MessageDto {
   @IsString()
   @IsOptional()
-  senderUsername?: string;
+  sender?: string;
 
   @IsString()
   senderId: string;
 
   @IsString()
   @IsOptional()
-  receiverUsername?: string;
+  receiver?: string;
 
   @IsString()
   receiverId: string;
+
+  @IsBoolean()
+  isVideo: boolean;
+
+  @IsBoolean()
+  isImage: boolean;
 
   @IsString()
   message: string;

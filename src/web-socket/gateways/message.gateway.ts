@@ -6,8 +6,10 @@ import {
 } from '@nestjs/websockets';
 
 import { Socket } from 'socket.io';
+import { MessageDto } from 'src/modules/message/message.dto';
 import { MessageEntity } from 'src/modules/message/message.entity';
 import { MessageService } from 'src/modules/message/message.service';
+import { MessageInterface } from 'src/types';
 
 interface WriteMessageSignalDto {
   from: string;
@@ -35,7 +37,7 @@ export class MessageGateway {
 
   @SubscribeMessage('sendMessage')
   handleSendMessage(
-    @MessageBody() message: MessageEntity,
+    @MessageBody() message: MessageDto,
     @ConnectedSocket() socket: Socket,
   ) {
     this.messageServices.createMessage(message);

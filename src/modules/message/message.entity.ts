@@ -16,7 +16,7 @@ export class MessageEntity {
   @JoinColumn()
   sender: string;
 
-  @Column({ nullable: true, default: '', type: 'varchar' })
+  @Column({ nullable: true, default: 0, type: 'varchar' })
   senderId: string;
 
   @Column({ nullable: true, default: '', type: 'varchar' })
@@ -27,6 +27,12 @@ export class MessageEntity {
 
   @Column({ nullable: true, default: '', type: 'varchar' })
   message: string;
+
+  @Column({ nullable: true, default: false, type: 'varchar' })
+  isVideo: boolean;
+
+  @Column({ nullable: true, default: false, type: 'varchar' })
+  isImage: boolean;
 
   @Column({ nullable: true, default: '', type: 'varchar' })
   date: string;
