@@ -16,14 +16,12 @@ export class SocketGateway {
 
   @SubscribeMessage('newConnection')
   async handleNewSocketConnection(@MessageBody() user: CreateUserDto) {
-    console.log('new user connection', user);
+    const { userToken } = user;
 
-    const foundUser = await this.userServices.findByTokenId(
-      user.userToken.toString(),
-    );
+    const foundUser = await this.userServices.findByTokenId(userToken);
 
     if (foundUser) {
-      await this.userServices.updateUserByToken(user.userToken, {
+      await this.userServices.updateById(foundUser.id, {
         username: user.username || foundUser.username,
         userToken: user.userToken || foundUser.userToken,
         userSocketId: user.userSocketId || foundUser.userSocketId,

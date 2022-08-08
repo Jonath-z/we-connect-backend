@@ -16,8 +16,6 @@ class UserService {
   }
 
   findByTokenId(userToken: string): Promise<UserEntity> {
-    console.log('user token', userToken);
-
     return this.userRepository.findOne({
       relations: ['contacts', 'calls', 'stories'],
       where: { userToken },
@@ -55,11 +53,8 @@ class UserService {
     return this.userRepository.find();
   }
 
-  updateUserByToken(
-    userToken: string,
-    data: CreateUserDto,
-  ): Promise<UpdateResult> {
-    return this.userRepository.update(userToken, { ...data });
+  updateById(id: number, data: CreateUserDto): Promise<UpdateResult> {
+    return this.userRepository.update(id, { ...data });
   }
 
   deleteUser(userToken: string): Promise<DeleteResult> {

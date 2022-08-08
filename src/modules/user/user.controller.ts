@@ -38,7 +38,10 @@ export class UserController {
         user: newUser,
       };
     } else {
-      throw new BadRequestException('username already exists');
+      return {
+        message: 'user exists',
+        user: foundUser,
+      };
     }
   }
 
@@ -47,7 +50,7 @@ export class UserController {
     const foundUser = await this.userServices.findByTokenId(user.userToken);
 
     if (foundUser) {
-      await this.userServices.updateUserByToken(user.userToken, {
+      await this.userServices.updateById(foundUser.id, {
         username: user.username || foundUser.username,
         userToken: user.userToken || foundUser.userToken,
         userCoverUrl: user.userCoverUrl || foundUser.userCoverUrl || '',
