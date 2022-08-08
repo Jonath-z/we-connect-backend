@@ -18,7 +18,7 @@ interface IRequestCallDto {
     orgin: '*',
   },
 })
-export class CallGateWay {
+export class CallGateway {
   @SubscribeMessage('requestCall')
   handleRequetedCall(
     @MessageBody() callRequest: IRequestCallDto,

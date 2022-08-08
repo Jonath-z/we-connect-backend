@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
 } from '@nestjs/common';
 import { CreateUserDto } from './createUser.dto';
 import UserService from './user.service';
@@ -20,14 +21,18 @@ export class UserController {
     return users;
   }
 
-  @Post('/create')
+  @Put('/create')
   async createUser(@Body() newUser: CreateUserDto) {
-    const user = await this.userServices.findByUsername(
-      newUser.userName.toLocaleLowerCase(),
+    console.log('user request', newUser);
+    const foundUser = await this.userServices.findByUsername(
+      newUser.username.toLocaleLowerCase(),
     );
 
-    if (!user) {
-      await this.userServices.createUser(newUser);
+    if (!foundUser) {
+      await this.userServices.createUser({
+        ...newUser,
+        usernameLowerCase: newUser.username.toLocaleLowerCase(),
+      });
       return {
         message: 'user created successfully',
         user: newUser,
@@ -37,20 +42,50 @@ export class UserController {
     }
   }
 
-  @Get('/:userIdOrUserToken')
-  async findUser(@Param() userIdOrUserToken: number) {
-    const user = await this.userServices.findById(userIdOrUserToken);
+  @Post('/update')
+  async updateUserProfile(@Body() user: CreateUserDto) {
+    const foundUser = await this.userServices.findByTokenId(user.userToken);
 
-    if (user) {
+    if (foundUser) {
+      await this.userServices.updateUserByToken(user.userToken, {
+        username: user.username || foundUser.username,
+        userToken: user.userToken || foundUser.userToken,
+        userCoverUrl: user.userCoverUrl || foundUser.userCoverUrl || '',
+        userProfileUrl: user.userProfileUrl || foundUser.userProfileUrl || '',
+        usernameLowerCase: (
+          user.username || foundUser.username
+        ).toLocaleLowerCase(),
+        userSocketId: user.userSocketId || foundUser.userSocketId,
+        userPassword: user.userPassword || foundUser.userPassword,
+      });
+
       return {
-        message: 'user found',
+        message: 'user updated successfully',
         user,
       };
     } else {
-      return {
-        message: 'user not found',
-        user: null,
-      };
+      throw new BadRequestException('user not found');
+    }
+  }
+
+  @Get('/:userToken')
+  async findUser(@Param('userToken') userToken: string) {
+    try {
+      const user = await this.userServices.findByTokenId(userToken);
+
+      if (user) {
+        return {
+          message: 'user found',
+          user,
+        };
+      } else {
+        return {
+          message: 'user not found',
+          user: null,
+        };
+      }
+    } catch (err) {
+      console.log('error when truing to fetch the user', err);
     }
   }
 }

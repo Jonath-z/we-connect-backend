@@ -18,7 +18,7 @@ interface WriteMessageSignalDto {
     origin: '*',
   },
 })
-export class MessageGateWay {
+export class MessageGateway {
   @SubscribeMessage('typingMessageSignal')
   handleSendMessage(
     @MessageBody() signal: WriteMessageSignalDto,

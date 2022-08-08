@@ -8,8 +8,9 @@ import { ContactModule } from './modules/contacts/contact.module';
 import { MessageModule } from './modules/message/message.module';
 import { StoryModule } from './modules/story/story.module';
 import { UserModule } from './modules/user/user.module';
-import { CallGateWay } from './web-socket/gateways/call.gateway';
-import { MessageGateWay } from './web-socket/gateways/message.gateway';
+import { CallGateway } from './web-socket/gateways/call.gateway';
+import { MessageGateway } from './web-socket/gateways/message.gateway';
+import { SocketGateway } from './web-socket/gateways/socket.gateway';
 
 @Module({
   imports: [
@@ -22,6 +23,6 @@ import { MessageGateWay } from './web-socket/gateways/message.gateway';
     StoryModule,
   ],
   controllers: [AppController],
-  providers: [AppService, CallGateWay, MessageGateWay],
+  providers: [AppService, CallGateway, MessageGateway, SocketGateway],
 })
 export class AppModule {}

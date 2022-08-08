@@ -2,7 +2,7 @@ import { IsOptional, IsString } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
-  userName: string;
+  username: string;
 
   @IsString()
   @IsOptional()
@@ -14,4 +14,16 @@ export class CreateUserDto {
   @IsString()
   @IsOptional()
   userProfileUrl?: string;
+
+  @IsString()
+  @IsOptional()
+  usernameLowerCase?: string;
+
+  @IsString()
+  @IsOptional()
+  userSocketId?: string;
+
+  @IsString()
+  @IsOptional()
+  userCoverUrl?: string;
 }

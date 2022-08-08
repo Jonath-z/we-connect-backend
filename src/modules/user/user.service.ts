@@ -15,37 +15,39 @@ class UserService {
     return this.userRepository.save(user);
   }
 
-  findById(id: number): Promise<UserEntity> {
+  findByTokenId(userToken: string): Promise<UserEntity> {
+    console.log('user token', userToken);
+
     return this.userRepository.findOne({
       relations: ['contacts', 'calls', 'stories'],
-      where: { id },
+      where: { userToken },
     });
   }
 
-  findUserContactsById(id: number): Promise<UserEntity> {
+  findUserContactsByTokenId(userToken: string): Promise<UserEntity> {
     return this.userRepository.findOne({
       relations: ['contacts'],
-      where: { id },
+      where: { userToken },
     });
   }
 
-  findUserStoriesById(id: number): Promise<UserEntity> {
+  findUserStoriesByTokenId(userToken: string): Promise<UserEntity> {
     return this.userRepository.findOne({
       relations: ['stories'],
-      where: { id },
+      where: { userToken },
     });
   }
 
-  findUserMessagesById(id: number): Promise<UserEntity> {
+  findUserMessagesByTokenId(userToken: string): Promise<UserEntity> {
     return this.userRepository.findOne({
       relations: ['messages'],
-      where: { id },
+      where: { userToken },
     });
   }
 
-  findByUsername(userNameLowerCase: string): Promise<UserEntity> {
+  findByUsername(usernameLowerCase: string): Promise<UserEntity> {
     return this.userRepository.findOne({
-      where: { userNameLowerCase },
+      where: { usernameLowerCase },
     });
   }
 
@@ -53,16 +55,19 @@ class UserService {
     return this.userRepository.find();
   }
 
-  updateUserById(id: number, data: any): Promise<UpdateResult> {
-    return this.userRepository.update(id, { ...data });
+  updateUserByToken(
+    userToken: string,
+    data: CreateUserDto,
+  ): Promise<UpdateResult> {
+    return this.userRepository.update(userToken, { ...data });
   }
 
-  deleteUser(id: number): Promise<DeleteResult> {
+  deleteUser(userToken: string): Promise<DeleteResult> {
     return this.userRepository
       .createQueryBuilder()
       .delete()
       .from(UserEntity)
-      .where('id = :id', { id })
+      .where('userToken = :userToken', { userToken })
       .execute();
   }
 }
