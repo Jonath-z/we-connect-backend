@@ -36,8 +36,6 @@ export class MessageGateway {
   ) {
     const { from, to, isTyping } = signal;
 
-    console.log('typing signal', signal);
-
     const foundUser = await this.userServices.findByUsername(
       to.toLocaleLowerCase().trim(),
     );

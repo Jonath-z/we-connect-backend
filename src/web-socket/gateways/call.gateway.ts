@@ -5,6 +5,8 @@ import {
   WebSocketGateway,
 } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
+import { CallService } from 'src/modules/call/call.service';
+import UserService from 'src/modules/user/user.service';
 
 interface IRequestCallDto {
   from: string;
@@ -19,31 +21,60 @@ interface IRequestCallDto {
   },
 })
 export class CallGateway {
+  constructor(
+    private readonly callServices: CallService,
+    private readonly userServices: UserService,
+  ) {}
+
   @SubscribeMessage('requestCall')
-  handleRequetedCall(
+  async handleRequetedCall(
     @MessageBody() callRequest: IRequestCallDto,
     @ConnectedSocket() socket: Socket,
   ) {
     const { from, to, signal, callType } = callRequest;
-    socket.broadcast.emit('incomingCall', { from, to, signal, callType });
+
+    const foundUser = await this.userServices.findByUsername(
+      to.toLocaleLowerCase().trim(),
+    );
+
+    if (foundUser) {
+      socket
+        .to(foundUser.userSocketId)
+        .emit('incomingCall', { from, to, signal, callType });
+    }
   }
 
   @SubscribeMessage('cancelCall')
-  handleCancelCall(
+  async handleCancelCall(
     @MessageBody() cancelCall: IRequestCallDto,
     @ConnectedSocket() socket: Socket,
   ) {
-    const { from, to } = cancelCall;
-    socket.broadcast.emit('leaveCall', { from, to });
+    const { to } = cancelCall;
+
+    const foundUser = await this.userServices.findByUsername(
+      to.toLocaleLowerCase().trim(),
+    );
+
+    if (foundUser) {
+      socket.to(foundUser.userSocketId).emit('leaveCall', { to });
+    }
   }
 
   @SubscribeMessage('answerCall')
-  handleAnswerCall(
+  async handleAnswerCall(
     @MessageBody() accepteCallData: IRequestCallDto,
     @ConnectedSocket() socket: Socket,
   ) {
     const { from, to, signal, callType } = accepteCallData;
-    console.log('answer call signal', signal);
-    socket.broadcast.emit('callAccepted', { from, to, signal, callType });
+
+    const foundUser = await this.userServices.findByUsername(
+      to.toLocaleLowerCase().trim(),
+    );
+
+    if (foundUser) {
+      socket
+        .to(foundUser.userSocketId)
+        .emit('callAccepted', { from, to, signal, callType });
+    }
   }
 }

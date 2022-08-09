@@ -23,7 +23,6 @@ export class UserController {
 
   @Put('/create')
   async createUser(@Body() newUser: CreateUserDto) {
-    console.log('user request', newUser);
     const foundUser = await this.userServices.findByUsername(
       newUser.username.toLocaleLowerCase(),
     );
