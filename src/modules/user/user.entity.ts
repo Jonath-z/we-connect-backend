@@ -31,6 +31,9 @@ class UserEntity {
   @Column({ nullable: true, default: '' })
   userCoverUrl: string;
 
+  @Column({ nullable: true, default: false })
+  online: boolean;
+
   @OneToMany(() => ContactEntity, (contact: ContactEntity) => contact.username)
   contacts: ContactEntity[];
 

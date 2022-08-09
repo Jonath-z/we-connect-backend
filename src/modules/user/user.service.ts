@@ -44,6 +44,7 @@ class UserService {
   }
 
   findByUsername(usernameLowerCase: string): Promise<UserEntity> {
+    console.log('data received', { usernameLowerCase });
     return this.userRepository.findOne({
       where: { usernameLowerCase },
     });

@@ -7,9 +7,10 @@ import {
 
 import { Socket } from 'socket.io';
 import { MessageDto } from 'src/modules/message/message.dto';
-import { MessageEntity } from 'src/modules/message/message.entity';
+// import { MessageEntity } from 'src/modules/message/message.entity';
 import { MessageService } from 'src/modules/message/message.service';
-import { MessageInterface } from 'src/types';
+import UserService from 'src/modules/user/user.service';
+// import { MessageInterface } from 'src/types';
 
 interface WriteMessageSignalDto {
   from: string;
@@ -23,25 +24,48 @@ interface WriteMessageSignalDto {
   },
 })
 export class MessageGateway {
-  constructor(private readonly messageServices: MessageService) {}
+  constructor(
+    private readonly messageServices: MessageService,
+    private readonly userServices: UserService,
+  ) {}
 
   @SubscribeMessage('typingMessageSignal')
-  handleTypeMessage(
+  async handleTypeMessage(
     @MessageBody() signal: WriteMessageSignalDto,
     @ConnectedSocket() socket: Socket,
   ) {
     const { from, to, isTyping } = signal;
 
-    socket.broadcast.emit('getTypingMessageSignal', { from, to, isTyping });
+    console.log('typing signal', signal);
+
+    const foundUser = await this.userServices.findByUsername(
+      to.toLocaleLowerCase().trim(),
+    );
+
+    if (foundUser) {
+      socket
+        .to(foundUser.userSocketId)
+        .emit('getTypingMessageSignal', { from, to, isTyping });
+    } else {
+      console.log('user not found');
+    }
   }
 
   @SubscribeMessage('sendMessage')
-  handleSendMessage(
+  async handleSendMessage(
     @MessageBody() message: MessageDto,
     @ConnectedSocket() socket: Socket,
   ) {
     this.messageServices.createMessage(message);
 
-    socket.broadcast.emit('newMessage', message);
+    const foundUser = await this.userServices.findByUsername(
+      message.receiver.toLocaleLowerCase().trim(),
+    );
+
+    if (foundUser) {
+      socket.to(foundUser.userSocketId).emit('newMessage', message);
+    } else {
+      console.log('user not found');
+    }
   }
 }
