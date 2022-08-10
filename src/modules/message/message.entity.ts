@@ -16,22 +16,22 @@ export class MessageEntity {
   @JoinColumn()
   sender: string;
 
-  @Column({ nullable: true, default: 0, type: 'varchar' })
+  @Column({ nullable: true, default: 0, type: 'integer' })
   senderId: string;
 
   @Column({ nullable: true, default: '', type: 'varchar' })
   receiver: string;
 
-  @Column({ nullable: true, default: '', type: 'varchar' })
+  @Column({ nullable: true, default: '', type: 'integer' })
   receiverId: string;
 
   @Column({ nullable: true, default: '', type: 'varchar' })
   message: string;
 
-  @Column({ nullable: true, default: false, type: 'varchar' })
+  @Column({ nullable: true, default: false, type: 'boolean' })
   isVideo: boolean;
 
-  @Column({ nullable: true, default: false, type: 'varchar' })
+  @Column({ nullable: true, default: false, type: 'boolean' })
   isImage: boolean;
 
   @Column({ nullable: true, default: '', type: 'varchar' })
