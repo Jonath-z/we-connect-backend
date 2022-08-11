@@ -18,7 +18,9 @@ export class SocketGateway {
   async handleNewSocketConnection(@MessageBody() user: CreateUserDto) {
     const { userToken } = user;
 
-    const foundUser = await this.userServices.findByTokenId(userToken);
+    const foundUser = await this.userServices.findByTokenIdOrUsername(
+      userToken,
+    );
 
     if (foundUser) {
       await this.userServices.updateById(foundUser.id, {

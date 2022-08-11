@@ -15,10 +15,14 @@ class UserService {
     return this.userRepository.save(user);
   }
 
-  findByTokenId(userToken: string): Promise<UserEntity> {
+  findByTokenIdOrUsername(userTokenOrUsername: string): Promise<UserEntity> {
+    console.log('userOrUsername', userTokenOrUsername);
     return this.userRepository.findOne({
       relations: ['contacts', 'calls', 'stories'],
-      where: { userToken },
+      where: [
+        { userToken: userTokenOrUsername },
+        { usernameLowerCase: userTokenOrUsername.toLocaleLowerCase() },
+      ],
     });
   }
 

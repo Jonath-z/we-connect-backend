@@ -17,7 +17,7 @@ export class CallEntity {
   username: UserEntity;
 
   @Column({ nullable: true, default: '' })
-  userAvatarUrl: string;
+  userProfileUrl: string;
 
   @Column({ nullable: true, default: '' })
   date: string;

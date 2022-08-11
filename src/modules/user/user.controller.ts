@@ -46,7 +46,9 @@ export class UserController {
 
   @Post('/update')
   async updateUserProfile(@Body() user: CreateUserDto) {
-    const foundUser = await this.userServices.findByTokenId(user.userToken);
+    const foundUser = await this.userServices.findByTokenIdOrUsername(
+      user.userToken,
+    );
 
     if (foundUser) {
       await this.userServices.updateById(foundUser.id, {
@@ -70,10 +72,12 @@ export class UserController {
     }
   }
 
-  @Get('/:userToken')
-  async findUser(@Param('userToken') userToken: string) {
+  @Get('/:userTokenOrUsername')
+  async findUser(@Param('userTokenOrUsername') userTokenOrUsername: string) {
     try {
-      const user = await this.userServices.findByTokenId(userToken);
+      const user = await this.userServices.findByTokenIdOrUsername(
+        userTokenOrUsername,
+      );
 
       if (user) {
         return {

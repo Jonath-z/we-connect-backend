@@ -5,6 +5,7 @@ import {
   WebSocketGateway,
 } from '@nestjs/websockets';
 import { Socket } from 'socket.io';
+import { CallDto } from 'src/modules/call/call.dto';
 import { CallService } from 'src/modules/call/call.service';
 import UserService from 'src/modules/user/user.service';
 
@@ -49,14 +50,14 @@ export class CallGateway {
     @MessageBody() cancelCall: IRequestCallDto,
     @ConnectedSocket() socket: Socket,
   ) {
-    const { to } = cancelCall;
+    const { to, from } = cancelCall;
 
     const foundUser = await this.userServices.findByUsername(
       to.toLocaleLowerCase().trim(),
     );
 
     if (foundUser) {
-      socket.to(foundUser.userSocketId).emit('leaveCall', { to });
+      socket.to(foundUser.userSocketId).emit('leaveCall', { to, from });
     }
   }
 
