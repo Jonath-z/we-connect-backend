@@ -20,6 +20,9 @@ export class CallEntity {
   userProfileUrl: string;
 
   @Column({ nullable: true, default: '' })
+  calledUsername: string;
+
+  @Column({ nullable: true, default: '' })
   date: string;
 
   @Column({ nullable: true, default: '' })

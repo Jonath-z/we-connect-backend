@@ -16,7 +16,6 @@ class UserService {
   }
 
   findByTokenIdOrUsername(userTokenOrUsername: string): Promise<UserEntity> {
-    console.log('userOrUsername', userTokenOrUsername);
     return this.userRepository.findOne({
       relations: ['contacts', 'calls', 'stories'],
       where: [

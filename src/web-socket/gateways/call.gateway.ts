@@ -16,6 +16,13 @@ interface IRequestCallDto {
   callType: string;
 }
 
+interface LeaveCallDto {
+  from: string;
+  to: string;
+  callType: string;
+  missed: boolean;
+}
+
 @WebSocketGateway({
   cors: {
     orgin: '*',
@@ -47,17 +54,17 @@ export class CallGateway {
 
   @SubscribeMessage('cancelCall')
   async handleCancelCall(
-    @MessageBody() cancelCall: IRequestCallDto,
+    @MessageBody() levedCall: LeaveCallDto,
     @ConnectedSocket() socket: Socket,
   ) {
-    const { to, from } = cancelCall;
+    const { to } = levedCall;
 
     const foundUser = await this.userServices.findByUsername(
       to.toLocaleLowerCase().trim(),
     );
 
     if (foundUser) {
-      socket.to(foundUser.userSocketId).emit('leaveCall', { to, from });
+      socket.to(foundUser.userSocketId).emit('leaveCall', levedCall);
     }
   }
 

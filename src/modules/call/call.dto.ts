@@ -7,6 +7,9 @@ export class CallDto {
   username: DeepPartial<UserEntity>;
 
   @IsString()
+  calledUsername: string;
+
+  @IsString()
   userProfileUrl: string;
 
   @IsString()
