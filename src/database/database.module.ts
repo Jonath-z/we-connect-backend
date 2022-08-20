@@ -1,10 +1,8 @@
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
-// import UserEntity from '../modules/user/user.entity';
-// import { CallEntity } from '../modules/entities/call.entity';
-// import { MessageEnity } from '../modules/entities/message.entity';
-// import { StoryEntity } from '../modules/story/story.entity';
+
+const isProd = process.env.NODE_ENV === 'production';
 
 @Module({
   imports: [
@@ -20,6 +18,16 @@ import { Module } from '@nestjs/common';
         database: configService.get('POSTGRES_DATABASE'),
         entities: [`dist/modules/**/*.entity.{js,ts}`],
         synchronize: false,
+        ...(isProd
+          ? {
+              ssl: true,
+              extra: {
+                ssl: {
+                  rejectUnauthorized: false,
+                },
+              },
+            }
+          : {}),
       }),
     }),
   ],
