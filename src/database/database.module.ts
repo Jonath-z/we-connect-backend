@@ -16,7 +16,10 @@ const isProd = process.env.NODE_ENV === 'production';
         username: 'postgres',
         password: configService.get('POSTGRES_PASSWORD') || 'password',
         database: configService.get('POSTGRES_DATABASE'),
-        entities: [`dist/modules/**/*.entity.{js,ts}`],
+        entities: [
+          './dist/modules/**/*.entity.js',
+          './src/modules/**/*.entity.ts',
+        ],
         synchronize: false,
         ...(isProd
           ? {
