@@ -10,7 +10,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "preinstall": "rm -rf /dist",
-    "postinstall": "npm run build & npm run migrate:run",
+    "postinstall": "npm run build & npm run migration:run",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
