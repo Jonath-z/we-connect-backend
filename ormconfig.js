@@ -17,4 +17,14 @@ module.exports = {
     entitiesDir: 'src/modules',
     migrationsDir: 'src/database/migrations',
   },
+  ...(process.env.NODE_ENV === 'production'
+    ? {
+        ssl: true,
+        extra: {
+          ssl: {
+            rejectUnauthorized: false,
+          },
+        },
+      }
+    : {}),
 };
