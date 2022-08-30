@@ -27,11 +27,9 @@
     "migration:generate": "npm run typeorm-cli migration:generate -- -n"
   },
   "dependencies": {
-    "@nestjs/apollo": "^10.0.11",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.0.0",
     "@nestjs/core": "^8.0.0",
-    "@nestjs/graphql": "^10.0.11",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/platform-socket.io": "^8.4.7",
     "@nestjs/schedule": "^2.1.0",
@@ -40,8 +38,6 @@
     "apollo-server-express": "^3.7.0",
     "class-validator": "^0.13.2",
     "dotenv": "^16.0.1",
-    "graphql": "^16.5.0",
-    "graphql-tools": "^8.2.9",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
