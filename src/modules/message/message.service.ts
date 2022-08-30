@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { DeleteResult } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { MessageDto } from './message.dto';
 import { MessageEntity } from './message.entity';
-import { MessageRepository } from './message.repository';
 
 @Injectable()
 export class MessageService {
-  constructor(public readonly messageRepository: MessageRepository) {}
+  constructor(
+    @InjectRepository(MessageEntity)
+    private messageRepository: Repository<MessageEntity>,
+  ) {}
 
   createMessage(message: MessageDto): Promise<any> {
     return this.messageRepository.save(message);

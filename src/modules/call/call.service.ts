@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { DeleteResult } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CallDto } from './call.dto';
 import { CallEntity } from './call.entity';
-import { CallReposotory } from './call.repository';
 
 @Injectable()
 export class CallService {
-  constructor(public readonly callRepository: CallReposotory) {}
+  constructor(
+    @InjectRepository(CallEntity)
+    private callRepository: Repository<CallEntity>,
+  ) {}
 
   saveCall(call: CallDto): Promise<any> {
     return this.callRepository.save(call);

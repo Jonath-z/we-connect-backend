@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { DeleteResult } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { ContactDto } from './contact.dto';
 import { ContactEntity } from './contact.entity';
-import { ContactRepository } from './contact.repository';
 
 @Injectable()
 export class ContactService {
-  constructor(public readonly contactRepository: ContactRepository) {}
+  constructor(
+    @InjectRepository(ContactEntity)
+    private contactRepository: Repository<ContactEntity>,
+  ) {}
 
   createContact(contact: ContactDto): Promise<any> {
     return this.contactRepository.save(contact);

@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { DeleteResult } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { StoryDto } from './story.dto';
 import { StoryEntity } from './story.entity';
-import { StoryRepository } from './story.repository';
 
 @Injectable()
 export class StorySevice {
-  constructor(public readonly storyRepository: StoryRepository) {}
+  constructor(
+    @InjectRepository(StoryEntity)
+    private storyRepository: Repository<StoryEntity>,
+  ) {}
 
   saveStory(story: StoryDto) {
     this.storyRepository.save(story);
